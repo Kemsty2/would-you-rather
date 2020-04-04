@@ -1,19 +1,20 @@
-import { USER_LOGOUT, USER_LOGIN } from "../Actions";
+import { USER_LOGOUT, USER_LOGIN, LIST_USERS } from "../Actions";
 
 //  Import Action Api
 
 const initialState = {
   info: {},
-  isAuthenticated: true
+  isAuthenticated: false,
+  listOfUsers: {}
 };
 
-export default (state = initialState, action = {}) => {
+export default (state = initialState, action = {}) => {  
   switch (action.type) {
     case USER_LOGIN: {
       return {
         ...state,
         isAuthenticated: true,
-        info: action.user
+        info: {...action.user}
       };
     }
 
@@ -22,6 +23,13 @@ export default (state = initialState, action = {}) => {
         ...state,
         isAuthenticated: false,
         info: {}
+      }
+    }
+
+    case LIST_USERS: {
+      return {
+        ...state,
+        listOfUsers: {...action.users}
       }
     }
 

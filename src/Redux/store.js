@@ -2,10 +2,12 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { routerReducer, routerMiddleware } from "react-router-redux";
 import user from "./Reducers/userReducer";
+import message from "./Reducers/messageReducer";
 
 export default function configureStore(history, initialState) {
   const reducers = {
-    user
+    user,
+    message
   };
 
   const middleware = [thunk, routerMiddleware(history)];

@@ -6,6 +6,7 @@ import configureStore from "./Redux/store";
 import UnAuthenticatedRoute from "./Routes/UnAuthenticatedRoute";
 import Loadable from "react-loadable";
 import Loader from "./Components/Loader";
+import {toast} from "react-toastify";
 
 import "./assets/css/bootstrap.css";
 import "./assets/css/menu.css";
@@ -13,6 +14,12 @@ import "./assets/css/vendors.css";
 import "./assets/css/style.css";
 import "./assets/css/custom.css";
 import "./assets/css/table.css";
+import 'react-toastify/dist/ReactToastify.min.css';
+
+toast.configure({
+  autoClose: 5000,
+  draggable: false
+});
 
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href");
 const history = createBrowserHistory({ basename: baseUrl });

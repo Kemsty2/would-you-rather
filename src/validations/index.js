@@ -1,0 +1,1 @@
+export { validateField, isFormValid } from './validator';

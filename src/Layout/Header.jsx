@@ -8,26 +8,28 @@ import {
   DropdownToggle
 } from "reactstrap";
 import classNames from "classnames";
+import { userLogout } from "../Redux/Actions/user";
+import { connect } from "react-redux";
 
 class Header extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
       active: ""
-    }
+    };
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if (prevProps.location.pathname !== this.props.location.pathname){
-      const paths = this.props.location.pathname.split('/');
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      const paths = this.props.location.pathname.split("/");
 
       if (paths.length > 1) {
         /**
          * on cherche le menu ayant ce basepath et on le garde
-         */        
-        this.setState({ active: paths[1] })
+         */
+
+        this.setState({ active: paths[1] });
       }
 
       console.log(paths);
@@ -35,7 +37,8 @@ class Header extends Component {
   }
 
   render() {
-    const {active} = this.state;
+    const { active } = this.state;
+    const { user, logout, isAuthenticated } = this.props;
     return (
       <header className="navbar navbar navbar-expand flex-column flex-md-row bd-navbar">
         <Link to="/">
@@ -51,33 +54,60 @@ class Header extends Component {
         <div className="navbar-nav-scroll">
           <ul className="navbar-nav bd-navbar-nav flex-row">
             <li className="nav-item">
-              <NavLink to="/" className={classNames({ 'animated_link': active === ""}, 'cursor-pointer', 'nav-link')}>
+              <NavLink
+                to="/"
+                className={classNames(
+                  { animated_link: active === "" },
+                  "cursor-pointer",
+                  "nav-link"
+                )}
+              >
                 List Of Pools
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/add" className={classNames({ 'animated_link': active === "add"}, 'cursor-pointer', 'nav-link')}>
+              <NavLink
+                to="/add"
+                className={classNames(
+                  { animated_link: active === "add" },
+                  "cursor-pointer",
+                  "nav-link"
+                )}
+              >
                 Add Pool
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/leaderboard" className={classNames({ 'animated_link': active === "leaderboard"}, 'cursor-pointer', 'nav-link')}>
+              <NavLink
+                to="/leaderboard"
+                className={classNames(
+                  { animated_link: active === "leaderboard" },
+                  "cursor-pointer",
+                  "nav-link"
+                )}
+              >
                 LeaderBoard
               </NavLink>
             </li>
           </ul>
         </div>
         <ul className="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-          <UncontrolledDropdown setActiveFromChild className="cursor-pointer">
-            <DropdownToggle tag="a" className="nav-link" caret>
-              Bienvenue, Moyo
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem tag="button" className="cursor-pointer">
-                Deconnexion
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
+          {isAuthenticated ? (
+            <UncontrolledDropdown setActiveFromChild className="cursor-pointer">
+              <DropdownToggle tag="a" className="nav-link" caret>
+                Bienvenue, {user.name}
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem
+                  tag="button"
+                  className="cursor-pointer"
+                  onClick={() => logout()}
+                >
+                  Deconnexion
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          ) : null}
 
           <li className="nav-item">
             <a
@@ -117,4 +147,18 @@ class Header extends Component {
     );
   }
 }
-export default Header;
+
+const mapStateToProps = state => {
+  const su = state.user;
+
+  return {
+    user: su.info,
+    isAuthenticated: su.isAuthenticated
+  };
+};
+
+const mapDispatchToProps = (dispatch, props) => ({
+  logout: () => dispatch(userLogout())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

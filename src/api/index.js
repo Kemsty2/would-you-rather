@@ -132,6 +132,14 @@ let users = {
       setTimeout(() => res({...questions}), 1000)
     })
   }
+
+  export function _getUser(id) {
+    return new Promise((res, rej) => {
+      setTimeout(() => {
+        return res({...users[id]});
+      }, 1000)
+    })
+  }
   
   function formatQuestion ({ optionOneText, optionTwoText, author }) {
     return {
