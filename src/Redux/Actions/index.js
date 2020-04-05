@@ -8,3 +8,6 @@ export const PENDING= '@Message/Pending'
 export const SUCCESS = '@Message/Success'
 export const FAIL = '@Message/Fail'
 export const RESET_MESSAGE = '@Message/ResetMessage'
+
+//actions sur les polls
+export const POLLS_LIST = "@Polls/List";

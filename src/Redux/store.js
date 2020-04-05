@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import { routerReducer, routerMiddleware } from "react-router-redux";
 import user from "./Reducers/userReducer";
 import message from "./Reducers/messageReducer";
+import polls from "./Reducers/pollsReducer";
 
 export default function configureStore(history, initialState) {
   const reducers = {
     user,
-    message
+    message,
+    polls
   };
 
   const middleware = [thunk, routerMiddleware(history)];

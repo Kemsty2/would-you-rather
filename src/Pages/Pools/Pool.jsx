@@ -1,19 +1,22 @@
 import React, { Component } from "react";
 import {Link} from "react-router-dom";
-import logo from "../../logo.svg"
-class Pool extends Component {
+import {connect} from "react-redux";
+
+class Poll extends Component {
   render() {
+    const {poll, listOfUsers} = this.props;
+    const author = listOfUsers[poll.author]
     return (
       <div className="col-lg-4 col-md-6">
-        <Link to="questions/1" className="box_topic">
+        <Link to={`questions/${poll.id}`} className="box_topic">
         <span>
             {/* <img src="" width="70" height="70" alt="" /> */}
             <img src="https://img.icons8.com/windows/96/000000/poll-vertical.png" alt=""/>
           </span>
-          <h3> Pool Name </h3>
+          <h3> By {author.name}</h3>
           <p>          
-          <img src={logo} className="user_avatar mr-2" alt="avatar"/>
-          <em> Kemsty</em>            
+          <img src={author.avatarURL} className="user_avatar mr-2" alt="avatar"/>
+          <em> At {new Date(poll.timestamp).toLocaleDateString()}</em>            
           </p>
         </Link>        
       </div>
@@ -21,4 +24,14 @@ class Pool extends Component {
   }
 }
 
-export default Pool;
+const mapStateToProps = (state) => {
+  const su = state.user;
+
+  return {
+    listOfUsers: su.listOfUsers
+  }
+}
+
+const mapDispatchToProps = (dispatch, props) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Poll);

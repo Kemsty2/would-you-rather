@@ -17,7 +17,7 @@ import "./assets/css/table.css";
 import 'react-toastify/dist/ReactToastify.min.css';
 
 toast.configure({
-  autoClose: 5000,
+  autoClose: 4000,
   draggable: false
 });
 

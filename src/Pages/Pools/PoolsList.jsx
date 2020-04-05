@@ -1,19 +1,25 @@
 import React, { Component } from "react";
 import Pool from "./Pool";
+import PropTypes from "prop-types";
 
 class PoolsList extends Component {
   render() {
+    const {polls} = this.props;
+
     return (
       <div className="row">
-        <Pool />
-        <Pool />
-        <Pool />
-        <Pool />
-        <Pool />
-        <Pool />
+        {polls.map(poll => {
+          return(
+            <Pool key={poll.id} poll={poll} />
+          )
+        })}                
       </div>
     );
   }
 }
 
 export default PoolsList;
+
+PoolsList.propTypes = {
+  polls: PropTypes.array
+}

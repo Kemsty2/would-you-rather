@@ -18,11 +18,13 @@ class OptionsContainer extends Component {
       <div className="col-lg-8">
         <div id="wizard_container" className="wizard">
           <div id="top-wizard">
-            <Link to="/questions/1" className="animated_link cursor-pointer">
-              <span id="location">
-                <i className="arrow_left"></i> Back to Pool
-              </span>
-            </Link>
+            {this.props.answer ? (
+              <Link to="/questions/1" className="animated_link cursor-pointer">
+                <span id="location">
+                  <i className="arrow_left"></i> Back to Pool
+                </span>
+              </Link>
+            ) : null}
           </div>
           <div id="wrapped" className="fl-form fl-style-1 wizard-form">
             <div id="middle-wizard" className="wizard-branch wizard-wrapper">
