@@ -11,3 +11,8 @@ export const RESET_MESSAGE = '@Message/ResetMessage'
 
 //actions sur les polls
 export const POLLS_LIST = "@Polls/List";
+export const UPDATE_POLLS_LIST = "@Polls/UpdateList";
+
+//actions sur les questions
+export const SET_QUESTION = "@Question/Set";
+export const SAVE_QUESTION = "@Question/Save";

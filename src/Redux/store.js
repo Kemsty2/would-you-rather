@@ -4,12 +4,14 @@ import { routerReducer, routerMiddleware } from "react-router-redux";
 import user from "./Reducers/userReducer";
 import message from "./Reducers/messageReducer";
 import polls from "./Reducers/pollsReducer";
+import question from "./Reducers/questionReducer";
 
 export default function configureStore(history, initialState) {
   const reducers = {
     user,
     message,
-    polls
+    polls,
+    question
   };
 
   const middleware = [thunk, routerMiddleware(history)];

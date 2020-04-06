@@ -1,19 +1,25 @@
-import { POLLS_LIST } from "../Actions";
+import { POLLS_LIST, UPDATE_POLLS_LIST } from "../Actions";
 
-//  Import Action Api
-
-const initialState = {  
+const initialState = {
   listOfPolls: {}
 };
 
-export default (state = initialState, action = {}) => {  
+export default (state = initialState, action = {}) => {
   switch (action.type) {
     case POLLS_LIST: {
       return {
         ...state,
-        listOfPolls: {...action.polls}        
+        listOfPolls: { ...action.polls }
       };
-    }    
+    }
+
+    case UPDATE_POLLS_LIST:
+      return {
+        ...state,
+        listOfPolls: Object.assign({}, state.listOfPolls, {
+          [action.question.id]: { ...action.question }
+        })
+      };
 
     default:
       return state;

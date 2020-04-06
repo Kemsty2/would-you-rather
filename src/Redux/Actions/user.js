@@ -6,8 +6,7 @@ export function userLogin(idUser) {
     dispatch({
       type: PENDING
     });
-    return _getUser(idUser).then(user => {
-      console.log({ user, idUser });
+    return _getUser(idUser).then(user => {      
       dispatch({
         type: USER_LOGIN,
         user

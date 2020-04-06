@@ -1,16 +1,20 @@
 import React, { Component } from "react";
-import user from "../../assets/img/default-user.jpg";
+import { connect } from "react-redux";
 
 class QuestionUser extends Component {
   render() {
+    const { user, question } = this.props;
     return (
       <div className="col-lg-4">
         <div id="left_form">
           <h3>Created By</h3>
           <figure>
-            <img src={user} alt="" width="100" height="100" />
+            <img src={user.avatarURL} alt="" width="100" height="100" />
             <p>
-              UserName <span>Created At 22/04/2020</span>
+              {user.name}{" "}
+              <span>
+                Created {new Date(question.timestamp).toLocaleDateString()}
+              </span>
             </p>
           </figure>
         </div>
@@ -19,4 +23,17 @@ class QuestionUser extends Component {
   }
 }
 
-export default QuestionUser;
+const mapStateToProps = state => {
+  const su = state.user,
+    sq = state.question;
+        
+
+  return {
+    user: {...su.listOfUsers[sq.question.author]},
+    question: sq.question
+  };
+};
+
+const mapDispatchToProps = (dispatch, props) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionUser);

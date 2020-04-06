@@ -69,7 +69,6 @@ export function isFormValid(formData, constraintGroup) {
       break;
     }
   }
-  console.log("valid", valid);
 
   return valid;
 }
