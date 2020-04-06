@@ -3,8 +3,7 @@ import {
   SAVE_QUESTION,
   PENDING,
   SUCCESS,
-  FAIL,
-  UPDATE_POLLS_LIST
+  FAIL
 } from ".";
 import { _getQuestion, _saveQuestionAnswer } from "../../api";
 
@@ -49,10 +48,10 @@ export function submitAnswer(qid, answer) {
           question
         });
 
-        dispatch({
+        /* dispatch({
           type: UPDATE_POLLS_LIST,
           question
-        });
+        }); */
 
         dispatch({
           type: SUCCESS

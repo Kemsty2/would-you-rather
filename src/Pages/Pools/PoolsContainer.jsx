@@ -4,7 +4,7 @@ import PoolsList from "./PoolsList";
 import { connect } from "react-redux";
 import { listPolls } from "../../Redux/Actions/polls";
 import LoaderForm from "../../Components/LoaderForm";
-import {isAnswerPoll} from "../../utils.js";
+import { isAnswerPoll } from "../../utils.js";
 
 class PoolsContainer extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class PoolsContainer extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.listPolls();
   }
 
@@ -27,16 +27,19 @@ class PoolsContainer extends Component {
 
   render() {
     const { pollType } = this.state;
-    const {listOfPolls, info} = this.props;
+    const { listOfPolls, info } = this.props;
     const polls = Object.values(listOfPolls).filter(poll => {
       const isAnswer = isAnswerPoll(poll, info.id);
 
-      return pollType === 1 ? isAnswer : !isAnswer
+      return pollType === 1 ? isAnswer : !isAnswer;
     });
     console.log("polls", polls);
 
     return (
-      <div className="container margin_60_35" style={{minHeight: "calc(100vh - 20vh)"}}>
+      <div
+        className="container margin_60_35"
+        style={{ minHeight: "calc(100vh - 20vh)" }}
+      >
         {this.props.status === "pending" ? <LoaderForm /> : null}
         <div className="main_title_2">
           <ButtonGroup>
@@ -60,7 +63,7 @@ class PoolsContainer extends Component {
           <h2>Some Pools Questions</h2>
           <p>Select Your Pool Question</p>
         </div>
-        <PoolsList polls={polls}/>
+        <PoolsList polls={polls} pollType={pollType} />
       </div>
     );
   }

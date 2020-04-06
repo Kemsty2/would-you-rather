@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 
 class PoolsList extends Component {
   render() {
-    const {polls} = this.props;
+    const {polls, pollType} = this.props;
 
     return (
       <div className="row">
         {polls.map(poll => {
           return(
-            <Pool key={poll.id} poll={poll} />
+            <Pool key={poll.id} poll={poll} pollType={pollType}/>
           )
         })}                
       </div>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Progress, Input, Label, FormGroup } from "reactstrap";
-
+import { Link } from "react-router-dom";
+import { getResult, isEmpty } from "../../utils";
 class OptionsContainer extends Component {
   constructor(props) {
     super(props);
@@ -9,28 +10,47 @@ class OptionsContainer extends Component {
       optionSelected: "optionOne"
     };
   }
-
+  componentDidMount() {
+    const { question, answer, info } = this.props;
+    if (answer) {
+      if (!isEmpty(question)) {
+        if(!isEmpty(info)){
+          const optionSelected = info.answers[question.id];
+          this.setState({
+            optionSelected
+          });
+        }
+      }
+    }
+  }
   onChange = e => {
     const { value } = e.target;
     this.setState({ optionSelected: value });
   };
-  
+
   onSubmitAnswer = () => {
-    const {id} = this.props.question;
-    const {optionSelected} = this.state;
+    const { id } = this.props.question;
+    const { optionSelected } = this.state;
 
     this.props.submitAnswer(id, optionSelected);
-  }
+  };
 
   render() {
     const { optionSelected } = this.state;
-
     const { question, answer } = this.props;
 
+    let resultOptionOne = {},
+      resultOptionTwo = {};
+    if (answer) {
+      if (!isEmpty(question)) {
+        resultOptionOne = getResult(question, "optionOne");
+        resultOptionTwo = getResult(question, "optionTwo");
+      }
+    }
     return (
       <div className="col-lg-8">
         <div id="wizard_container" className="wizard">
-          {/* <div id="top-wizard">
+          <div id="top-wizard">
             {answer ? (
               <Link
                 to={`/questions/${question.id}`}
@@ -41,7 +61,7 @@ class OptionsContainer extends Component {
                 </span>
               </Link>
             ) : null}
-          </div> */}
+          </div>
           <div id="wrapped" className="fl-form fl-style-1 wizard-form">
             <div id="middle-wizard" className="wizard-branch wizard-wrapper">
               <div className="step wizard-step current">
@@ -57,10 +77,14 @@ class OptionsContainer extends Component {
                         style={{ paddingBottom: "23px" }}
                       >
                         <div className="text-center mb-1">
-                          <span className="mr-2">Pourcentage : 50%</span>
-                          <span>Nombre : 2</span>
+                          <span className="mr-2">
+                            Percentage Of Vote : {resultOptionOne.percentage}%
+                          </span>
+                          <span>
+                            Numbers Of Vote : {resultOptionOne.numVotes}
+                          </span>
                         </div>
-                        <Progress value={50}>
+                        <Progress value={resultOptionOne.percentage}>
                           {question.optionOne ? question.optionOne.text : ""}
                         </Progress>
 
@@ -69,6 +93,7 @@ class OptionsContainer extends Component {
                           name={question.id}
                           className="required"
                           value="optionOne"
+                          checked={optionSelected === "optionOne"}
                         />
                         <span
                           className="checkmark"
@@ -80,10 +105,14 @@ class OptionsContainer extends Component {
                         style={{ paddingBottom: "23px" }}
                       >
                         <div className="text-center mb-1">
-                          <span className="mr-2">Pourcentage : 50%</span>
-                          <span>Nombre : 2</span>
+                          <span className="mr-2">
+                            Percentage Of Vote : {resultOptionTwo.percentage}%
+                          </span>
+                          <span>
+                            Numbers Of Vote : {resultOptionTwo.numVotes}
+                          </span>
                         </div>
-                        <Progress value={50}>
+                        <Progress value={resultOptionTwo.percentage}>
                           {question.optionTwo ? question.optionTwo.text : ""}
                         </Progress>
 
@@ -92,6 +121,7 @@ class OptionsContainer extends Component {
                           name={question.id}
                           className="required"
                           value="optionTwo"
+                          checked={optionSelected === "optionTwo"}
                         />
                         <span
                           className="checkmark"
@@ -109,13 +139,13 @@ class OptionsContainer extends Component {
                             className="required"
                             value="optionOne"
                             checked={optionSelected === "optionOne"}
-                            onChange={this.onChange}                            
+                            onChange={this.onChange}
                           />
                           {question.optionOne ? question.optionOne.text : ""}
                           <span className="checkmark"></span>
                         </Label>
                       </FormGroup>
-                      
+
                       <FormGroup check>
                         <Label className="container_radio version_2" check>
                           <Input
@@ -146,7 +176,12 @@ class OptionsContainer extends Component {
                   >
                     Answer
                   </button> */}
-                  <button type="button" name="forward" className="forward" onClick={this.onSubmitAnswer}>
+                  <button
+                    type="button"
+                    name="forward"
+                    className="forward"
+                    onClick={this.onSubmitAnswer}
+                  >
                     Submit Answer
                   </button>
                 </>

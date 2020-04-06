@@ -18,12 +18,13 @@ class QuestionsAnswered extends Component {
   }
 
   render() {
+    const { question } = this.props;
     return (
       <div className="container" style={{marginBottom: "3rem", minHeight: "calc(100vh - 20vh)"}}>
         {this.props.status === "pending" ? <LoaderForm /> : null}
         <div id="form_container">
           <div className="row no-gutters">
-            <QuestionUser />            
+            <QuestionUser author={question.author}/>            
             <OptionsContainer answer={true} {...this.props}/>
           </div>
         </div>
@@ -46,8 +47,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
-  getQuestion: idQuestion => dispatch(getQuestion(idQuestion)),
-  submitAnswer: (qid, answer) => dispatch()
+  getQuestion: idQuestion => dispatch(getQuestion(idQuestion)),  
 });
 
 export default connect(

@@ -4,13 +4,13 @@ import {connect} from "react-redux";
 
 class Poll extends Component {
   render() {
-    const {poll, listOfUsers} = this.props;
+    const {poll, listOfUsers, pollType} = this.props;
     const author = listOfUsers[poll.author]
     return (
-      <div className="col-lg-4 col-md-6">
-        <Link to={`questions/${poll.id}`} className="box_topic">
+      <div className="col-lg-4 col-md-6">        
+        <Link to={`questions/${pollType === 2 ? poll.id: poll.id + "/result"}`} className="box_topic">
         <span>
-            {/* <img src="" width="70" height="70" alt="" /> */}
+            {/* <img src="" width="70" height="70" alt="" /> */}            
             <img src="https://img.icons8.com/windows/96/000000/poll-vertical.png" alt=""/>
           </span>
           <h3> By {author.name}</h3>
