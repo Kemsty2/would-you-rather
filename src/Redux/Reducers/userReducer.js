@@ -1,4 +1,4 @@
-import { USER_LOGOUT, USER_LOGIN, LIST_USERS } from "../Actions";
+import { USER_LOGOUT, USER_LOGIN, LIST_USERS, UPDATE_USER } from "../Actions";
 
 //  Import Action Api
 
@@ -30,6 +30,13 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         listOfUsers: {...action.users}
+      }
+    }
+
+    case UPDATE_USER: {
+      return {
+        ...state,
+        info: {...action.info}
       }
     }
 

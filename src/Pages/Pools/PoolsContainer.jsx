@@ -32,8 +32,7 @@ class PoolsContainer extends Component {
       const isAnswer = isAnswerPoll(poll, info.id);
 
       return pollType === 1 ? isAnswer : !isAnswer;
-    });
-    console.log("polls", polls);
+    });    
 
     return (
       <div

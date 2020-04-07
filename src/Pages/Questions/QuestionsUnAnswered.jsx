@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import QuestionUser from "./QuestionUser";
 import OptionsContainer from "./OptionsContainer";
 import { connect } from "react-redux";
-import { getQuestion, submitAnswer } from "../../Redux/Actions/questions";
+import { getQuestion, submitAnswer, clearQuestion } from "../../Redux/Actions/questions";
 import LoaderForm from "../../Components/LoaderForm";
+import { isEmpty, isAnswerPoll } from "../../utils";
 
 class QuestionsUnAnswered extends Component {
   constructor(props) {
@@ -12,9 +13,22 @@ class QuestionsUnAnswered extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    const {id} = this.props.match.params;
-    this.props.getQuestion(id);
+  async componentDidMount() {
+    const { id } = this.props.match.params;
+    await this.props.getQuestion(id);
+    const {question, info} = this.props;    
+    
+    if(!isEmpty(question)){
+      if(!isEmpty(info)){
+        if (isAnswerPoll(question, info.id)) {          
+          this.props.history.push(`/questions/${question.id}/result`);
+        }
+      }
+    }
+  }  
+
+  componentWillUnmount(){
+    this.props.clearQuestion();
   }
 
   render() {
@@ -38,7 +52,7 @@ const mapStateToProps = state => {
     su = state.user,
     sq = state.question;
 
-  return {    
+  return {
     status: sm.status,
     info: su.info,
     question: sq.question
@@ -47,7 +61,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => ({
   getQuestion: idQuestion => dispatch(getQuestion(idQuestion)),
-  submitAnswer: (qid, answer) => dispatch(submitAnswer(qid, answer))
+  submitAnswer: (qid, answer) => dispatch(submitAnswer(qid, answer)),
+  clearQuestion: () => dispatch(clearQuestion())
 });
 
 export default connect(

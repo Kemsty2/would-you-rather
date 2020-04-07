@@ -144,7 +144,7 @@ export function _getUser(id) {
   return new Promise((res, rej) => {
     setTimeout(() => {
       return res({ ...users[id] });
-    }, 1000);
+    }, 2000);
   });
 }
 
@@ -176,6 +176,7 @@ export function _saveQuestion(question) {
   return new Promise((res, rej) => {
     const authedUser = question.author;
     const formattedQuestion = formatQuestion(question);
+        
 
     setTimeout(() => {
       questions = {

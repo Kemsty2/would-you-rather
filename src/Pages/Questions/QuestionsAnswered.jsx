@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import QuestionUser from "./QuestionUser";
 import OptionsContainer from "./OptionsContainer";
 import { connect } from "react-redux";
-import { getQuestion } from "../../Redux/Actions/questions";
+import { getQuestion, clearQuestion } from "../../Redux/Actions/questions";
 import LoaderForm from "../../Components/LoaderForm";
+import {isEmpty} from "../../utils";
 
 class QuestionsAnswered extends Component {
   constructor(props) {
@@ -17,11 +18,15 @@ class QuestionsAnswered extends Component {
     this.props.getQuestion(id);
   }
 
+  componentWillUnmount(){
+    this.props.clearQuestion();
+  }
+
   render() {
     const { question } = this.props;
     return (
       <div className="container" style={{marginBottom: "3rem", minHeight: "calc(100vh - 20vh)"}}>
-        {this.props.status === "pending" ? <LoaderForm /> : null}
+        {isEmpty(this.props.question) ? <LoaderForm /> : null}
         <div id="form_container">
           <div className="row no-gutters">
             <QuestionUser author={question.author}/>            
@@ -48,6 +53,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, props) => ({
   getQuestion: idQuestion => dispatch(getQuestion(idQuestion)),  
+  clearQuestion: () => dispatch(clearQuestion())
 });
 
 export default connect(

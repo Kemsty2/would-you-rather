@@ -8,10 +8,10 @@ export const isAnswerPoll = (poll, idUser) => {
 export const getResult = (question, optionType) => {  
   const totalVotes = question.optionOne.votes.length + question.optionTwo.votes.length;
   const percentage = ((question[optionType].votes.length) / totalVotes) * 100;
-
+  
   const result = {
     numVotes: question[optionType].votes.length,
-    percentage
+    percentage: percentage < 50 ? Math.floor(percentage) : Math.ceil(percentage)
   }
   return result;
 }

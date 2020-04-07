@@ -10,19 +10,7 @@ class OptionsContainer extends Component {
       optionSelected: "optionOne"
     };
   }
-  componentDidMount() {
-    const { question, answer, info } = this.props;
-    if (answer) {
-      if (!isEmpty(question)) {
-        if(!isEmpty(info)){
-          const optionSelected = info.answers[question.id];
-          this.setState({
-            optionSelected
-          });
-        }
-      }
-    }
-  }
+
   onChange = e => {
     const { value } = e.target;
     this.setState({ optionSelected: value });
@@ -33,6 +21,8 @@ class OptionsContainer extends Component {
     const { optionSelected } = this.state;
 
     this.props.submitAnswer(id, optionSelected);
+
+    this.props.history.push(`/questions/${id}/result`);
   };
 
   render() {
@@ -40,12 +30,17 @@ class OptionsContainer extends Component {
     const { question, answer } = this.props;
 
     let resultOptionOne = {},
-      resultOptionTwo = {};
+      resultOptionTwo = {}, userAnswer = "";
     if (answer) {
       if (!isEmpty(question)) {
         resultOptionOne = getResult(question, "optionOne");
         resultOptionTwo = getResult(question, "optionTwo");
-      }
+        if (question.optionOne.votes.indexOf(this.props.info.id) !== -1) {
+          userAnswer = "optionOne"
+        } else if (this.props.question.optionTwo.votes.indexOf(this.props.info.id) !== -1) {
+          userAnswer = "optionTwo"
+        }
+      }            
     }
     return (
       <div className="col-lg-8">
@@ -93,7 +88,8 @@ class OptionsContainer extends Component {
                           name={question.id}
                           className="required"
                           value="optionOne"
-                          checked={optionSelected === "optionOne"}
+                          checked={userAnswer === "optionOne"}
+                          onChange={() => {}}
                         />
                         <span
                           className="checkmark"
@@ -121,7 +117,8 @@ class OptionsContainer extends Component {
                           name={question.id}
                           className="required"
                           value="optionTwo"
-                          checked={optionSelected === "optionTwo"}
+                          checked={userAnswer === "optionTwo"}
+                          onChange={() => {}}
                         />
                         <span
                           className="checkmark"

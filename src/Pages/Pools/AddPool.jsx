@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import logo from "../../logo.svg";
 import { FormGroup, Input, FormFeedback, Label, FormText } from "reactstrap";
+import {savePoll} from "../../Redux/Actions/polls";
+import {connect} from "react-redux";
+import { validateField, isFormValid } from "../../validations/validator";
+import LoaderForm from "../../Components/LoaderForm";
+import lodash from "lodash";
 
 class AddPool extends Component {
   constructor(props) {
@@ -8,11 +13,11 @@ class AddPool extends Component {
 
     this.state = {
       fields: {
-        option1: {
+        optionOne: {
           value: "",
           error: null
         },
-        option2: {
+        optionTwo: {
           value: "",
           error: null
         }
@@ -22,6 +27,35 @@ class AddPool extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    const {fields} = this.state;
+
+    if (isFormValid(fields, "pollNew") !== true) {      
+      const keys = Object.keys(fields);
+      for (let name of keys) {
+        this.setState(prevState => {
+          let value = prevState.fields[name].value;
+          return {
+            fields: {
+              ...prevState.fields,
+              [name]: {
+                ...prevState.fields[name],
+                value: value,
+                error: validateField(name, value, [], "pollNew")
+              }
+            }
+          };
+        });
+      }
+      return;      
+    }
+
+    const payload = lodash.mapValues(fields, "value");    
+    console.log(payload);
+
+    this.props.savePoll(payload);
+
+    //this.props.history.push("/");
   }
 
   onChange = (e) => {
@@ -45,6 +79,7 @@ class AddPool extends Component {
     const { fields } = this.state;
     return (
       <div className="container min-h-100 mb-3">
+        {this.props.status === "pending" ? <LoaderForm /> : null}
         <div id="form_container">
           <div className="row no-gutters">
             <div className="col-lg-4">
@@ -78,41 +113,41 @@ class AddPool extends Component {
                         Would You Rather ?
                       </h3>
                       <FormGroup>
-                        <Label for="option1">Option One</Label>
+                        <Label for="optionOne">Option One</Label>
                         <Input
-                          id="option1"
-                          name="option1"
-                          value={fields["option1"].value}
-                          invalid={fields["option1"].error !== null}
+                          id="optionOne"
+                          name="optionOne"
+                          value={fields["optionOne"].value}
+                          invalid={fields["optionOne"].error !== null}
                           onChange={this.onChange}                          
                         />
                         <FormText>Please Provide The First Option</FormText>
-                        {fields["option1"].error !== null ? (
+                        {fields["optionOne"].error !== null ? (
                           <FormFeedback>
-                            {fields["option1"].error}
+                            {fields["optionOne"].error}
                           </FormFeedback>
                         ) : null}                        
                       </FormGroup>
                       <FormGroup>
                         <Label for="option2">Option Two</Label>
                         <Input
-                          id="option2"
-                          name="option2"
-                          value={fields["option2"].value}
-                          invalid={fields["option2"].error !== null}
+                          id="optionTwo"
+                          name="optionTwo"
+                          value={fields["optionTwo"].value}
+                          invalid={fields["optionTwo"].error !== null}
                           onChange={this.onChange}
                         />
                         <FormText>Please Provide The Second Option</FormText>
-                        {fields["option2"].error !== null ? (
+                        {fields["optionTwo"].error !== null ? (
                           <FormFeedback>
-                            {fields["option2"].error}
+                            {fields["optionTwo"].error}
                           </FormFeedback>
                         ) : null}                        
                       </FormGroup>
                     </div>
                   </div>
                   <div id="bottom-wizard">
-                    <button type="button" name="forward" className="forward">
+                    <button type="submit" name="forward" className="forward">
                       Submit
                     </button>
                   </div>
@@ -126,4 +161,17 @@ class AddPool extends Component {
   }
 }
 
-export default AddPool;
+
+const mapStateToProps = (state) => {
+  const sm = state.message;
+  return {
+    message: sm.message,
+    status: sm.status
+  }
+}
+
+const mapDispatchToProps = (dispatch, props) => ({
+  savePoll: (payload) => dispatch(savePoll(payload))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPool);

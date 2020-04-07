@@ -2,6 +2,7 @@
 export const USER_LOGIN = "@User/Login";
 export const USER_LOGOUT = "@User/Logout";
 export const LIST_USERS = "@Users/ListUsers";
+export const UPDATE_USER = "@Users/Update";
 
 //actions sur les messages
 export const PENDING= '@Message/Pending'
@@ -12,7 +13,9 @@ export const RESET_MESSAGE = '@Message/ResetMessage'
 //actions sur les polls
 export const POLLS_LIST = "@Polls/List";
 export const UPDATE_POLLS_LIST = "@Polls/UpdateList";
+export const ADD_POLL = "@Polls/Add";
 
 //actions sur les questions
 export const SET_QUESTION = "@Question/Set";
+export const UNSET_QUESTION = "@Question/UnSet";
 export const SAVE_QUESTION = "@Question/Save";

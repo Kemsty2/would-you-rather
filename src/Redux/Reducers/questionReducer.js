@@ -1,4 +1,4 @@
-import { SET_QUESTION, SAVE_QUESTION } from "../Actions";
+import { SET_QUESTION, SAVE_QUESTION, UNSET_QUESTION } from "../Actions";
 
 //  Import Action Api
 
@@ -19,6 +19,13 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         question: {...action.question}
+      }
+    }
+
+    case UNSET_QUESTION: {
+      return {
+        ...state,
+        question: {}
       }
     }
 

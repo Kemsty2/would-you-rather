@@ -24,15 +24,9 @@ class Header extends Component {
     if (prevProps.location.pathname !== this.props.location.pathname) {
       const paths = this.props.location.pathname.split("/");
 
-      if (paths.length > 1) {
-        /**
-         * on cherche le menu ayant ce basepath et on le garde
-         */
-
+      if (paths.length > 1) {        
         this.setState({ active: paths[1] });
-      }
-
-      console.log(paths);
+      }      
     }
   }
 

@@ -1,16 +1,16 @@
 const constraints = {
   pollNew: {
-    option1: {
+    optionOne: {
       presence: true,
       length: {        
         minimum: 1,
         message: "^Veuillez saisir l'option 1"
       }
     },
-    option2: {
+    optionTwo: {
       presence: true,
       length: {        
-        minimum: 10,
+        minimum: 1,
         message: "^Veuillez saisir l'option 2"
       }
     },    

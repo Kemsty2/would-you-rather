@@ -1,5 +1,6 @@
 import {
   SET_QUESTION,
+  UNSET_QUESTION,
   SAVE_QUESTION,
   PENDING,
   SUCCESS,
@@ -32,12 +33,19 @@ export function getQuestion(qid) {
   };
 }
 
+export function clearQuestion(){
+  return (dispatch, getState) => {
+    dispatch({
+      type: UNSET_QUESTION
+    })
+  }
+}
+
 export function submitAnswer(qid, answer) {
   return (dispatch, getState) => {
     dispatch({
       type: PENDING
-    });
-    console.log(getState());
+    });    
 
     const authedUser = getState().user.info.id;
 
@@ -59,7 +67,7 @@ export function submitAnswer(qid, answer) {
       })
       .catch(err => {
         dispatch({
-          type: SUCCESS,
+          type: FAIL,
           message: err.message
         });
       });
