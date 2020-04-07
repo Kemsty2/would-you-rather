@@ -55,7 +55,7 @@ class AddPool extends Component {
 
     this.props.savePoll(payload);
 
-    //this.props.history.push("/");
+    this.props.history.push("/");
   }
 
   onChange = (e) => {
