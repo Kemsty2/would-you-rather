@@ -2,19 +2,26 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import LoaderForm from "../../Components/LoaderForm";
 import { isEmpty } from "../../utils";
-import {listUsers} from "../../Redux/Actions/user";
+import { listUsers } from "../../Redux/Actions/user";
+import lodash from "lodash";
+
 class LeaderBoardContainer extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
-    this.state = {}
+    this.state = {};
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.getUsers();
   }
   render() {
-    const { listOfUsers } = this.props;
+    
+    const listOfUsers = lodash.orderBy(
+      Object.values(this.props.listOfUsers),
+      [(elt) => elt.questions.length, (elt) => Object.keys(elt.answers).length],
+      ["desc", "desc"]
+    );
     return (
       <div className="container mt-3 min-h-100">
         {this.props.status === "pending" ? <LoaderForm /> : null}
@@ -29,7 +36,7 @@ class LeaderBoardContainer extends Component {
                   <tr className="row100 head">
                     <th className="cell100 column1">User</th>
                     <th className="cell100 column2">Number of Questions</th>
-                    <th className="cell100 column3">Number of Answers</th>                    
+                    <th className="cell100 column3">Number of Answers</th>
                   </tr>
                 </thead>
               </table>
@@ -66,7 +73,7 @@ class LeaderRow extends Component {
           {user.name}
         </td>
         <td className="cell100 column2">{numQuestions}</td>
-        <td className="cell100 column3">{numAnswers}</td>        
+        <td className="cell100 column3">{numAnswers}</td>
       </tr>
     );
   }
