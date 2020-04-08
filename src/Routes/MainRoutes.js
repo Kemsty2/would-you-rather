@@ -2,7 +2,7 @@ import React from "react";
 import Loadable from "react-loadable";
 import Loader from "../Components/Loader";
 import AuthenticatedRoute from "./AuthenticatedRoute";
-import { Switch, Route, withRouter } from "react-router-dom";
+import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 const PoolsRoute = Loadable({
@@ -69,7 +69,8 @@ export const Routes = ({ childProps, location }) => {
         component={LeaderBoardRoute}
         props={childProps}
       />     
-      <Route component={NotFoundRoute}/>
+      <Route component={NotFoundRoute} path="/notfound" />
+      <Redirect to="/notfound" />
     </Switch>
   );
 };
