@@ -19,9 +19,7 @@ class LeaderBoardContainer extends Component {
                   <tr className="row100 head">
                     <th className="cell100 column1">User</th>
                     <th className="cell100 column2">Number of Questions</th>
-                    <th className="cell100 column3">Number of Answers</th>
-                    {/* <th className="cell100 column4">Trainer</th>
-                    <th className="cell100 column5">Spots</th> */}
+                    <th className="cell100 column3">Number of Answers</th>                    
                   </tr>
                 </thead>
               </table>
@@ -58,9 +56,7 @@ class LeaderRow extends Component {
           {user.name}
         </td>
         <td className="cell100 column2">{numQuestions}</td>
-        <td className="cell100 column3">{numAnswers}</td>
-        {/* <td className="cell100 column4"></td>
-        <td className="cell100 column5"></td> */}
+        <td className="cell100 column3">{numAnswers}</td>        
       </tr>
     );
   }
