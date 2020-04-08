@@ -5,17 +5,32 @@ import { connect } from "react-redux";
 import { getQuestion, clearQuestion } from "../../Redux/Actions/questions";
 import LoaderForm from "../../Components/LoaderForm";
 import {isEmpty} from "../../utils";
+import {Redirect} from "react-router-dom";
 
 class QuestionsAnswered extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      redirectTo: null
+    };
   }
 
-  componentDidMount(){
-    const {id} = this.props.match.params;
-    this.props.getQuestion(id);
+  async componentDidMount(){
+    const { id } = this.props.match.params;
+    await this.props.getQuestion(id);
+    const {question} = this.props;    
+    
+    console.log("question", question);
+
+    if(isEmpty(question)){
+      this.setState({
+        redirectTo: {
+          pathname: "/notfound",
+          state: {text: "Poll Not Found"}
+        }
+      })
+    }
   }
 
   componentWillUnmount(){
@@ -24,6 +39,12 @@ class QuestionsAnswered extends Component {
 
   render() {
     const { question } = this.props;
+    const {redirectTo} = this.state;
+
+    if (redirectTo !== null) {
+      return <Redirect to={{...redirectTo}} />
+    }
+
     return (
       <div className="container" style={{marginBottom: "3rem", minHeight: "calc(100vh - 20vh)"}}>
         {isEmpty(this.props.question) ? <LoaderForm /> : null}

@@ -2,7 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import LoaderForm from "../../Components/LoaderForm";
 import { isEmpty } from "../../utils";
+import {listUsers} from "../../Redux/Actions/user";
 class LeaderBoardContainer extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {}
+  }
+
+  componentDidMount(){
+    this.props.getUsers();
+  }
   render() {
     const { listOfUsers } = this.props;
     return (
@@ -72,7 +82,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, props) => ({});
+const mapDispatchToProps = (dispatch, props) => ({
+  getUsers: () => dispatch(listUsers()),
+});
 
 export default connect(
   mapStateToProps,
