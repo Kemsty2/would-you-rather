@@ -19,8 +19,8 @@ class LeaderBoardContainer extends Component {
     
     const listOfUsers = lodash.orderBy(
       Object.values(this.props.listOfUsers),
-      [(elt) => elt.questions.length, (elt) => Object.keys(elt.answers).length],
-      ["desc", "desc"]
+      [(elt) => elt.questions.length + Object.keys(elt.answers).length],
+      ["desc"]
     );
     return (
       <div className="container mt-3 min-h-100">
