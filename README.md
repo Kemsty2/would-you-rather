@@ -99,7 +99,7 @@ The application is able to manage poll. A poll item contains the following field
 
 First,  the user should login to the platform. To log into the platform,
 select a user in the user list and click on `Sign In`
-![TTA Screenshot](./public/images/img2.png)
+![TTA Screenshot](https://github.com/Kemsty2/would-you-rather/tree/master/public/images/img2.png)
 
 ### List the poll
 
@@ -107,7 +107,7 @@ After logging on the application, the list of poll is displayed. You can
 
 1. Filter the poll between Unanswered and Answered Poll
 
-![TTA Screenshot](./public/images/img1.png)
+![TTA Screenshot](https://github.com/Kemsty2/would-you-rather/tree/master/public/images/img1.png)
 
 ### Add a poll
 
@@ -116,7 +116,7 @@ To add a poll, Click on `Add Poll` Nav Link.
 1. Edit the optionOne and optionTwo
 2. Click on Add
 
-![TTA Screenshot](./public/images/img5.png)
+![TTA Screenshot](https://github.com/Kemsty2/would-you-rather/tree/master/public/images/img5.png)
 
 ### Answer a poll
 
@@ -128,7 +128,7 @@ To answer a poll,
 
 The Poll Details is displayed.
 
-![TTA Screenshot](./public/images/img3.png)
+![TTA Screenshot](https://github.com/Kemsty2/would-you-rather/tree/master/public/images/img3.png)
 
 ### See Poll Details
 
@@ -136,13 +136,13 @@ Click on an answered poll
 
 1. The Details of a poll is displayed
 
-![TTA Screenshot](./public/images/img4.png)
+![TTA Screenshot](https://github.com/Kemsty2/would-you-rather/tree/master/public/images/img4.png)
 
 ### Display Leaderboard
 
 To display a leaderboard, click on `Leaderboard Nav Item`
 
-![TTA Screenshot](./public/images/img6.png)
+![TTA Screenshot](https://github.com/Kemsty2/would-you-rather/tree/master/public/images/img6.png)
 
 ## Credits  
   
